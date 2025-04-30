@@ -1,0 +1,31 @@
+# Clone the source
+git clone https://git.postgresql.org/git/postgresql.git
+cd postgressql
+
+
+./configure
+make
+sudo make install
+
+# Alternate to the `adduser postgres` command for macos
+sudo dscl . -create /Groups/postgres
+sudo dscl . -create /Groups/postgres PrimaryGroupID 1000
+sudo dscl . -create /Users/postgres
+sudo dscl . -create /Users/postgres UserShell /bin/bash
+sudo dscl . -create /Users/postgres RealName "PostgreSQL"
+sudo dscl . -create /Users/postgres UniqueID "1000"
+sudo dscl . -create /Users/postgres PrimaryGroupID 1000
+sudo mkdir -p /usr/local/pgsql/data
+
+sudo chown postgres /usr/local/pgsql/data
+
+# Create a logs folder and give access to the postgres user
+sudo mkdir /usr/local/pgsql/logs
+sudo chown -R postgres:postgres /usr/local/pgsql/logs
+
+# Open the postgres shell
+sudo -u postgres -i
+/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data
+/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start
+/usr/local/pgsql/bin/createdb test
+/usr/local/pgsql/bin/psql test
