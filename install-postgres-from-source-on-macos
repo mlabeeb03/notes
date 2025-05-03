@@ -26,6 +26,6 @@ sudo chown -R postgres:postgres /usr/local/pgsql/logs
 # Open the postgres shell
 sudo -u postgres -i
 /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data
-/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start
+/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l /usr/local/pgsql/logs/logfile start
 /usr/local/pgsql/bin/createdb test
 /usr/local/pgsql/bin/psql test
